@@ -42,7 +42,7 @@ const userController = {
                 validPassword = await bcrypt.compare(password, currentUser.dataValues.password);
                 
                 if(!validPassword) {
-                    res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"})
+                    return res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"})
                 }
 
                 const user = {
@@ -51,7 +51,7 @@ const userController = {
                     role: currentUser.role.name,
                 };
 
-                res.json(user)
+                return res.json(user)
             }
 
             res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"});
