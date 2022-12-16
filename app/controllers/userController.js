@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const bcrypt = require('bcrypt');
+const { generateAccessToken, generateRefreshToken } = require('../utils/jwt');
 const saltRounds = 10;
 
 const userController = {
@@ -34,16 +35,13 @@ const userController = {
             const { email, password } = req.body;
 
             const currentUser = await User.findOne({ where: { email }, include: ['role']});
-            console.log(currentUser);
 
             let validPassword;
 
             if (currentUser) {
                 validPassword = await bcrypt.compare(password, currentUser.dataValues.password);
                 
-                if(!validPassword) {
-                    return res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"})
-                }
+                if(!validPassword)  return res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"})
 
                 const user = {
                     email : currentUser.dataValues.email,
@@ -51,13 +49,17 @@ const userController = {
                     role: currentUser.role.name,
                 };
 
-                return res.json(user)
+                const accessToken = generateAccessToken(user);
+                const refreshToken = generateRefreshToken(user);
+
+                return res.json({ user, accessToken, refreshToken });
             }
 
             res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"});
             
         } catch (error) {
             console.log(error);
+            res.status(500).json({ message : "Erreur serveur"});
         }
     }
 }
