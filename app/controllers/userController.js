@@ -34,20 +34,28 @@ const userController = {
             const { email, password } = req.body;
 
             const currentUser = await User.findOne({ where: { email }, include: ['role']});
+            console.log(currentUser);
 
-            const validPassword = await bcrypt.compare(password, currentUser.dataValues.password);
+            let validPassword;
 
-            if(!currentUser || !validPassword) {
-                res.send("Erreur d'utilisateur ou mot de passe")
+            if (currentUser) {
+                validPassword = await bcrypt.compare(password, currentUser.dataValues.password);
+                
+                if(!validPassword) {
+                    res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"})
+                }
+
+                const user = {
+                    email : currentUser.dataValues.email,
+                    name: currentUser.dataValues.name,
+                    role: currentUser.role.name,
+                };
+
+                res.json(user)
             }
 
-            const user = {
-                email : currentUser.dataValues.email,
-                name: currentUser.dataValues.name,
-                role: currentUser.role.name,
-            };
-
-            res.json(user)
+            res.status(401).json({ message : "Erreur d'utilisateur ou mot de passe"});
+            
         } catch (error) {
             console.log(error);
         }
