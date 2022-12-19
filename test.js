@@ -2,11 +2,11 @@ require("dotenv").config();
 
 const sequelize = require("./app/database")
 
-const Role = require("./app/models/role")
+const User = require("./app/models/user")
 
 sequelize.authenticate().then(() => console.log('ok')).catch((err) => console.log(err))
 
 
-Role.findAll().then(roles => {
-    console.log(roles)
+User.findAll().then(user => {
+    console.log(user)
   })

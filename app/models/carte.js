@@ -5,7 +5,7 @@ class Carte extends Sequelize.Model {};
   
   Carte.init({
     name: Sequelize.STRING,
-    is_active: {
+    active: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },  

@@ -7,9 +7,11 @@ class User extends Sequelize.Model {};
     email: Sequelize.STRING,
     password: Sequelize.STRING,
     name: Sequelize.STRING,
+    admin: Sequelize.BOOLEAN,
+    active: Sequelize.BOOLEAN,
   }, {
     sequelize,
-    tableName: "user"
+    tableName: "user",
   });
   
   

@@ -1,11 +1,7 @@
 BEGIN;
 
-INSERT INTO "role" (name) VALUES
-('admin'),
-('editor');
-
-INSERT INTO "user" (name, email, password, role_id, created_at, updated_at) VALUES
-('admin', 'admin@mail.com', '$2b$10$6ibZbDSJZXrd7vQkTuMRqePvD3vfgeh8iFtvog8Cr6V8rGej5cfDi', 1, now(), now());
+INSERT INTO "user" (name, email, password, admin, active, created_at, updated_at) VALUES
+('Super admin', 'admin@mail.com', '$2b$10$6ibZbDSJZXrd7vQkTuMRqePvD3vfgeh8iFtvog8Cr6V8rGej5cfDi', true, true, now(), now());
 
 INSERT INTO "family" (name) VALUES
 ('Entrées'),

@@ -1,20 +1,8 @@
 const User = require('./user');
-const Role = require('./role');
 const Carte = require('./carte');
 const Recipe = require('./recipe');
 const Category = require('./category');
 const Family = require('./family');
-
-// User <> Role - 1 to many
-User.belongsTo(Role, {
-    foreignKey: "role_id",
-    as: "role"
-});
-
-Role.hasMany(User, {
-    foreignKey: "role_id",
-    as: "users"
-});
 
 // Carte <> User - 1 to many
 Carte.belongsTo(User, {
@@ -64,4 +52,4 @@ Family.hasMany(Category, {
     as: "categories"
 });
 
-module.exports = { User, Role, Carte, Recipe, Family, Category };
+module.exports = { User, Carte, Recipe, Family, Category };
