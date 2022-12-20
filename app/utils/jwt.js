@@ -18,11 +18,25 @@ function authenticateToken(req, res, next) {
   if (!token) return res.status(401).json({message: 'Accès non autorisé.'});
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, user) => {
-    if(error) return res.status(401).json({message: 'Accès non autorisé.'});
+    if(error) {
+      return res.status(401).json({message: 'Accès non autorisé.'});
+    }
     req.user = user;
     next();
   })
 
 }
 
-module.exports = { generateAccessToken, authenticateToken, generateRefreshToken }
+function authorizeAdmin(req, res, next) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+  const user = jwt.decode(token);
+  const isAdmin = user.admin;
+
+  if(!isAdmin) {
+    return res.status(401).json({message: 'Accès non autorisé.'});
+  }
+  next();
+}
+
+module.exports = { generateAccessToken, authenticateToken, generateRefreshToken, authorizeAdmin }

@@ -38,23 +38,6 @@ const userController = {
         }
     },
 
-    async insertUser(req, res) {
-        try {
-            const { name, email, password } = req.body;
-
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
-            await User.create({
-                name,
-                email,
-                password: hashedPassword,
-            })
-            
-            res.send("Utilisateur ajouté");
-        } catch (error) {
-            console.log(error)
-        }
-    },
-
     async updateUser(req, res) {
         try {
             const { name, email, admin } = req.body;
@@ -141,7 +124,7 @@ const userController = {
                       } else {
                         res.json({
                           message:
-                            "Un email contenant les instructions pour réinitialiser votre mot de passe vous a été envoyé.",
+                            "Un email contenant les instructions pour définir un mot de passe a été envoyé au nouvel utilisateur.",
                         });
                       }
                     }

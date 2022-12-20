@@ -30,7 +30,8 @@ const mainController = {
             delete user.iat;
             delete user.exp;
             const refreshedToken = generateAccessToken(user);
-            res.send({
+
+            res.json({
                 accessToken: refreshedToken,
             });
         });
