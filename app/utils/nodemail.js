@@ -1,14 +1,10 @@
 const nodemailer = require("nodemailer");
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: 'gmail',
-      auth: {
-        type: 'OAuth2',
+    auth: {
         user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENTID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN
+        pass: process.env.APP_PASSWORD,
     }
 });
 
@@ -27,4 +23,4 @@ const registrationMail = (email, token) => {
     }
 };
 
-module.exports = { transporter, registrationMail };
+module.exports = { registrationMail, transporter };
