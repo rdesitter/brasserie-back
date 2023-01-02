@@ -1,8 +1,10 @@
 const express = require("express");
 const { carteController } = require("../controllers");
+const { authenticateToken } = require("../utils/jwt");
 const router = express.Router();
 
-router.get("/cartes", carteController.getCartes);
+router.get("/cartes", authenticateToken, carteController.getCartes);
+router.post("/cartes/add", authenticateToken, carteController.addCarte);
 
 router.get("/category/:id", carteController.getRecipeByCategory);
 

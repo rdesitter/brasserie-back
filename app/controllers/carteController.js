@@ -15,6 +15,20 @@ const carteController = {
         }
     },
 
+    async addCarte(req, res) {
+        try {
+            const { name } = req.body;
+            await Carte.create({
+                name
+            });
+    
+            res.json({message: "La carte a bien été enregistrée."});
+        } catch (error) {
+            if(error.parent.constraint === 'carte_name_key') return res.status(404).json({message: "Ce nom de carte est déjà utilisé."})
+            res.status(500).json({message: error.parent.detail})
+        }
+    },
+
     async getRecipeByCategory(req, res) {
         try {
             const categoryId = req.params.id;
