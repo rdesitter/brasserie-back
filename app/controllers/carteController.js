@@ -7,7 +7,10 @@ const carteController = {
             const cartes = await Carte.findAll({
                 include: [{
                     association: "categories",
-                    include: ["sections"]
+                    include: [{
+                        association: "sections",
+                        include: "recipes"
+                    }]
                 }]
             });
             res.json(cartes)
