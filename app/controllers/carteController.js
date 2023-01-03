@@ -1,4 +1,5 @@
-const { Carte, Category, Family } = require('../models');
+const { decode } = require('jsonwebtoken');
+const { Carte, Category, Family, User } = require('../models');
 
 const carteController = {
     async getCartes(req, res) {
@@ -18,8 +19,15 @@ const carteController = {
     async addCarte(req, res) {
         try {
             const { name } = req.body;
+
+            // get user id from token & find user
+            const token = req.headers.authorization.split(' ')[1];
+            const { email } = decode(token);
+            const user = await User.findOne({where : {email}})
+            
             await Carte.create({
-                name
+                name,
+                user_id: user.id
             });
     
             res.json({message: "La carte a bien été enregistrée."});
