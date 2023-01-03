@@ -2,7 +2,7 @@ const User = require('./user');
 const Carte = require('./carte');
 const Recipe = require('./recipe');
 const Category = require('./category');
-const Family = require('./family');
+const Section = require('./section');
 
 // Carte <> User - 1 to many
 Carte.belongsTo(User, {
@@ -15,41 +15,41 @@ User.hasMany(Carte, {
     as: "cartes"
 });
 
-// Carte <> Recipe - Many to many
-Carte.belongsToMany(Recipe, {
-    as: "recipes", 
-    through: 'carte_has_recipe',
+// Carte <> Category - Many to many
+Carte.belongsToMany(Category, {
+    as: "categories", 
+    through: 'carte_has_category',
     foreignKey: 'carte_id',
-    otherKey: 'recipe_id',
+    otherKey: 'category_id',
 });
 
-Recipe.belongsToMany(Carte, {
+Category.belongsToMany(Carte, {
     as: "carteList",
-    through: 'carte_has_recipe',
+    through: 'carte_has_category',
     otherKey: 'carte_id',
-    foreignKey: 'recipe_id',
+    foreignKey: 'category_id',
 });
 
-// Recipe <> Category - 1 to many
-Recipe.belongsTo(Category, {
+// Recipe <> Section - 1 to many
+Recipe.belongsTo(Section, {
+    foreignKey: "section_id",
+    as: "section"
+});
+
+Section.hasMany(Recipe, {
+    foreignKey: "section_id",
+    as: "recipes"
+});
+
+// Section <> Category - 1 to many
+Section.belongsTo(Category, {
     foreignKey: "category_id",
     as: "category"
 });
 
-Category.hasMany(Recipe, {
+Category.hasMany(Section, {
     foreignKey: "category_id",
-    as: "recipes"
+    as: "sections"
 });
 
-// Category <> Family - 1 to many
-Category.belongsTo(Family, {
-    foreignKey: "family_id",
-    as: "family"
-});
-
-Family.hasMany(Category, {
-    foreignKey: "family_id",
-    as: "categories"
-});
-
-module.exports = { User, Carte, Recipe, Family, Category };
+module.exports = { User, Carte, Recipe, Section, Category };

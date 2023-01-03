@@ -3,9 +3,8 @@ const sequelize = require('../database');
 
 class Category extends Sequelize.Model {};
   
-  Category.init({
+Category.init({
     name: Sequelize.STRING,
-    description: Sequelize.STRING,
   }, {
     sequelize,
     tableName: "category"

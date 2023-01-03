@@ -1,14 +1,15 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 
-class Family extends Sequelize.Model {};
+class Section extends Sequelize.Model {};
   
-  Family.init({
+Section.init({
     name: Sequelize.STRING,
+    description: Sequelize.STRING,
   }, {
     sequelize,
-    tableName: "family"
+    tableName: "section"
   });
   
   
-  module.exports = Family;
+  module.exports = Section;
