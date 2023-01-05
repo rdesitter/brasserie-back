@@ -2,7 +2,7 @@ BEGIN;
 
 DROP TABLE IF EXISTS "user",
 "carte",
-"family",
+"section",
 "category",
 "recipe",
 "carte_has_category";
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS "recipe"(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
-    price DECIMAL,
+    price DECIMAL default 0,
     section_id INT REFERENCES "section"(id),
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP

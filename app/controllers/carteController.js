@@ -1,5 +1,5 @@
 const { decode } = require('jsonwebtoken');
-const { Carte, Category, Family, User } = require('../models');
+const { Carte, Category, Recipe, User } = require('../models');
 
 const carteController = {
     async getCartes(req, res) {
@@ -66,6 +66,26 @@ const carteController = {
             res.json(recipeList);
         } catch (error) {
             console.log(error)
+        }
+    },
+
+    async addRecipe(req, res) {
+        try {
+            const carteId = req.params.id;
+            const { name, description, price, sectionId } = req.body;
+            console.log(carteId);
+            console.log(req.body);
+            await Recipe.create({
+                name,
+                description,
+                price,
+                section_id: sectionId
+            });
+    
+            res.json({message: "Le plat a bien été enregistré."});
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: "Erreur serveur"});
         }
     }
 }

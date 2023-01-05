@@ -19,10 +19,13 @@ INSERT INTO "section" (name, description, category_id) VALUES
 
 INSERT INTO "recipe" (name, description, price, section_id) VALUES
 ('Salade Périgourdine', null, 22, 2),
-('Poêlée d\’encornets persillés', null, 16.50, 1);
+('Salade César au poulet croustillant', null, 17, 2),
+('Poêlée d’encornets persillés', null, 16.50, 1),
+('Choucroute de Poissons', 'Choucroute, dés de saumon fumé, assortiment de poissons selon arrivage, pommes vapeur, beurre blanc', 28, 3),
+('Choucroute Alsacienne', 'Choucroute, francfort, strasbourg,cervelas, poitrine fumée, saucisse fumée, pommes vapeur', 27, 3);
 
-INSERT INTO "carte" (name, user_id) VALUES
-('Carte test', 1);
+INSERT INTO "carte" (name, user_id, active) VALUES
+('Carte test', 1, true);
 
 INSERT INTO "carte_has_category" (carte_id, category_id) VALUES
 (1, 1),
